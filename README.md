@@ -1,6 +1,6 @@
 # ChapSmart
 
-** Lightning to M-Pesa remittance bridge for Tanzania**
+ Lightning to M-Pesa remittance bridge for Tanzania
 
 [![Live Site](https://img.shields.io/badge/Live-chapsmart.com-blue)](https://chapsmart.com)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
