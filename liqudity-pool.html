@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChapSmart – Liquidity Pools</title>
+<link rel="icon" type="image/png" href="img/logo1.png">
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #f7931a;
+  --primary-dark: #d67a0f;
+  --background: #fffaf5;
+  --card-bg: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #5a5a5a;
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.app-container {
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Top App Bar */
+.app-bar {
+  background: #000;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-img {
+  height: 36px;
+  border-radius: 8px;
+}
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.actions i {
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.actions i:hover { transform: scale(1.15); }
+
+/* Page Content */
+.page-content {
+  flex: 1;
+  padding: 28px 24px 40px;
+}
+.hero-section {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.hero-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* Plan Cards */
+.pool-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.pool-card:hover { transform: translateY(-4px); }
+
+.pool-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18px;
+  flex-shrink: 0;
+}
+.pool-icon i { color: #fff; font-size: 22px; }
+
+.pool-info { flex: 1; }
+.pool-title { font-weight: 600; font-size: 18px; margin-bottom: 6px; }
+.pool-details { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Duration badge – top right with padlock */
+.duration-badge {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.history-section {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.history-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  justify-content: center;
+}
+.history-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(247, 147, 26, 0.3);
+}
+.history-btn i { font-size: 18px; }
+
+/* FAQ Section */
+.faq-section {
+  margin-top: 30px;
+}
+.faq-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.faq-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.faq-card:hover { transform: translateY(-2px); }
+.faq-question {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 0;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.faq-question i {
+  color: var(--primary);
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+.faq-answer {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding-top: 10px;
+  display: none;
+}
+.faq-card.active .faq-answer { display: block; }
+.faq-card.active .faq-question i { transform: rotate(180deg); }
+</style>
+</head>
+<body>
+<div class="app-container">
+
+  <div class="app-bar">
+    <div class="logo-container">
+      <img src="img/logo1.png" class="logo-img" alt="ChapSmart Logo">
+      <div class="logo-text">CHAPSMART</div>
+    </div>
+    <div class="actions">
+      <a href="support.html" style="color: inherit; text-decoration: none;">
+        <i class="fas fa-headset"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="hero-section">
+      <h1 class="hero-title">Liquidity Pools</h1>
+      <p class="hero-subtitle">Provide liquidity to ChapSmart and earn competitive APYs with our 6-month Tether (USDT) on the Bitcoin Lightning Network.</p>
+    </div>
+
+    <div class="pool-card" onclick="window.location.href='pending3.html'">
+      <span class="duration-badge"><i class="fas fa-lock"></i> 6-Month</span>
+      <div class="pool-icon"><i class="fas fa-seedling"></i></div>
+      <div class="pool-info">
+        <div class="pool-title">Starter Boost</div>
+        <div class="pool-details">
+          Deposit: $10 – $1,000<br>
+          APY: 5% 
+        </div>
+      </div>
+    </div>
+
+    <div class="pool-card" onclick="window.location.href='pending3.html'">
+      <span class="duration-badge"><i class="fas fa-lock"></i> 6-Month</span>
+      <div class="pool-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="pool-info">
+        <div class="pool-title">Growth Plus</div>
+        <div class="pool-details">
+          Deposit: $1,000 – $3,000<br>
+          APY: 8% 
+        </div>
+      </div>
+    </div>
+
+    <div class="pool-card" onclick="window.location.href='pending3.html'">
+      <span class="duration-badge"><i class="fas fa-lock"></i> 6-Month</span>
+      <div class="pool-icon"><i class="fas fa-crown"></i></div>
+      <div class="pool-info">
+        <div class="pool-title">Prime Yield</div>
+        <div class="pool-details">
+          Deposit: $3,000 – $5,000<br>
+          APY: 12% 
+        </div>
+      </div>
+    </div>
+
+    <!-- History Button Section -->
+    <div class="history-section">
+      <button class="history-btn" onclick="window.location.href='pending3.html'">
+        <i class="fas fa-history"></i>
+        View Pool History
+      </button>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> Why USDT (Lightning) instead of Bitcoin?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Tether (USDT) on the Bitcoin Lightning Network provides stability with instant settlement and low fees, avoiding the high volatility of Bitcoin while maintaining the security benefits of the Bitcoin network.
+        </div>
+      </div>
+
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> How do liquidity pools work?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Liquidity pools allow you to deposit Tether (USDT) on the Bitcoin Lightning Network for a fixed 6-month period. Your funds are used to provide liquidity, and you earn competitive APY returns paid in Tether (USDT) on the Bitcoin Lightning Network throughout the term.
+        </div>
+      </div>
+
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> When can I withdraw my funds?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Funds are locked for the 6-month duration. Early withdrawals are not permitted to ensure stable returns for all participants.
+        </div>
+      </div>
+
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> How are APY returns calculated?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          APY is calculated annually and distributed proportionally in Tether (USDT) on the Bitcoin Lightning Network based on your deposit amount and the pool's performance over the 6-month term.
+        </div>
+      </div>
+
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> What happens when my pool term ends?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          At maturity, your principal plus earned yield in Tether (USDT) on the Bitcoin Lightning Network will be automatically returned to your wallet.
+        </div>
+      </div>
+
+      <div class="faq-card" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span><i class="fas fa-question-circle"></i> What are the benefits of using Lightning Network?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          The Lightning Network enables instant transactions with minimal fees, making Tether (USDT) on the Bitcoin Lightning Network ideal for liquidity provision with fast settlements and cost-efficient operations.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleFAQ(card) {
+  card.classList.toggle('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+:root {
+    --background: #fff;
+    --text-color: #333;
+    --card-background: #f9f9f9;
+    --primary: #F7931A;
+    --error-bg: #ffe6e6;
+    --success-bg: #e6ffe6;
+    --valid-color: #28a745;
+    --secondary: #444;
+}
+
+body {
+    background: var(--background);
+    color: var(--text-color);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+.calculator-card {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.calculator-card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-control.invalid {
+    border-color: red;
+}
+
+.form-control.valid {
+    border-color: var(--valid-color);
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2328a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat right 10px center;
+}
+
+.currency-selector {
+    display: flex;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #e68215;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-secondary:hover {
+    background: #222;
+}
+
+.result-box {
+    background: #fff3e6;
+    border: 1px solid #ffe0b3;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.3rem 0;
+    font-weight: 500;
+}
+
+.error {
+    color: red;
+    font-size: 0.85rem;
+}
+
+.valid {
+    color: var(--valid-color);
+    font-size: 0.85rem;
+}
+
+#formMessages {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+#formMessages.error {
+    background: var(--error-bg);
+    border: 1px solid #ff9999;
+    color: red;
+}
+
+#formMessages.success {
+    background: var(--success-bg);
+    border: 1px solid #99ff99;
+    color: green;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: var(--card-background);
+    color: var(--text-color);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    text-align: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid var(--primary);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.popup.error {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.popup h3 {
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.popup p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.popup .fa-bitcoin {
+    font-size: 40px;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.popup textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: var(--text-color);
+    resize: none;
+    font-size: 0.9rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 80px;
+}
+
+.popup img {
+    margin: 1rem auto;
+    max-width: 180px;
+    display: block;
+}
+
+.popup .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.popup .close:hover {
+    color: var(--primary);
+}
+
+.popup #timer {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.popup #popupAmount {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.popup button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #fff;
+    color: #dc3545;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.popup button:hover {
+    background: #f0f0f0;
+}
+
+.popup-success-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.popup-success-message {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.popup-success-details {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: left;
+    margin-top: 1rem;
+}
+
+.popup-success-details p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.popup-success-details strong {
+    color: var(--primary);
+    font-weight: 600;
+}

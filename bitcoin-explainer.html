@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitcoin Explainer – ChapSmart</title>
+  <link rel="icon" type="image/png" href="img/logo1.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #f7931a;
+      --primary-dark: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif; }
+    body { background: var(--background); color: var(--text); }
+
+    .app-container {
+      max-width: 500px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--background);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .app-bar {
+      background: #000;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+    .logo-container { display: flex; align-items: center; gap: 12px; }
+    .logo-img { height: 36px; border-radius: 8px; }
+    .logo-text { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+    .actions i {
+      font-size: 24px; color: #fff; cursor: pointer; transition: transform 0.2s ease;
+    }
+    .actions i:hover { transform: scale(1.15); }
+
+    /* Content */
+    .page-content { flex: 1; padding: 28px 24px 40px; }
+    .hero-section {
+      text-align: center;
+      margin-bottom: 36px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    .hero-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      flex-shrink: 0;
+    }
+    .feature-icon i { color: #fff; font-size: 22px; }
+    .feature-title { font-weight: 600; margin-bottom: 6px; font-size: 16px; }
+    .feature-desc  { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .feature-desc a {
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .feature-desc a:hover { text-decoration: underline; }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(20px);}
+      to   {opacity:1; transform:translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header -->
+    <div class="app-bar">
+      <div class="logo-container">
+        <img src="img/logo1.png" class="logo-img" alt="ChapSmart Logo">
+        <div class="logo-text">CHAPSMART</div>
+      </div>
+      <div class="actions">
+        <a href="index.html" style="color: inherit; text-decoration: none;">
+          <i class="fas fa-home"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <div class="hero-section">
+        <h1 class="hero-title">Bitcoin Explainer</h1>
+        <p class="hero-subtitle">Understand Bitcoin, Lightning, and Satoshis—and how to buy Bitcoin on exchanges like Binance and OKX before using ChapSmart.</p>
+      </div>
+
+      <!-- What is Bitcoin -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fab fa-bitcoin"></i></div>
+        <div>
+          <div class="feature-title">What is Bitcoin?</div>
+          <div class="feature-desc">
+            Bitcoin is a decentralized digital currency running on a global peer-to-peer network.
+            It allows anyone to send money worldwide without banks or middlemen.
+          </div>
+        </div>
+      </div>
+
+      <!-- Satoshis -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-coins"></i></div>
+        <div>
+          <div class="feature-title">Satoshis (SATS)</div>
+          <div class="feature-desc">
+            One Bitcoin equals 100,000,000 Satoshis (“sats”).  
+            ChapSmart uses sats for flexible, low-fee payments—perfect for everyday transfers.
+          </div>
+        </div>
+      </div>
+
+      <!-- Lightning Network -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <div class="feature-title">Lightning Network ⚡</div>
+          <div class="feature-desc">
+            A second-layer network on top of Bitcoin enabling instant, low-cost payments.
+            ChapSmart leverages Lightning to deliver fast cross-border transactions.
+          </div>
+        </div>
+      </div>
+
+      <!-- Why ChapSmart Uses Bitcoin -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-globe"></i></div>
+        <div>
+          <div class="feature-title">Why ChapSmart Uses Bitcoin</div>
+          <div class="feature-desc">
+            • Borderless and censorship-resistant.<br>
+            • Secure—protected by the strongest blockchain network.<br>
+            • Inclusive—anyone with a smartphone can participate.
+          </div>
+        </div>
+      </div>
+
+      <!-- Getting Started -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-wallet"></i></div>
+        <div>
+          <div class="feature-title">Getting Started</div>
+          <div class="feature-desc">
+            Download a Lightning-compatible wallet like <strong>Wallet of Satoshi</strong> or <strong>BlueWallet</strong>, fund it with BTC, and you’re ready to send or receive via ChapSmart.
+          </div>
+        </div>
+      </div>
+
+      <!-- Buy Bitcoin via Exchanges -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+        <div>
+          <div class="feature-title">Buy Bitcoin on Binance or OKX</div>
+          <div class="feature-desc">
+            Need Bitcoin first? You can purchase BTC directly on popular exchanges and then transfer to your Lightning wallet:
+            <br><br>
+            • <a href="https://www.binance.com" target="_blank">Binance</a> – Create an account, complete KYC, buy BTC with card or bank transfer, then withdraw to your wallet.<br>
+            • <a href="https://www.okx.com" target="_blank">OKX</a> – Similar steps: register, verify, buy BTC, and withdraw to your Lightning-compatible wallet.<br><br>
+            Once the funds reach your wallet, you can instantly use them on ChapSmart.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

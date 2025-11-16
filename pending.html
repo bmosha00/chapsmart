@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On-Chain Coming Soon – ChapSmart</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #f7931a;
+      --primary-dark: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .popup-container {
+      background: var(--card-bg);
+      width: 360px;
+      max-width: 90%;
+      padding: 32px 24px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.4s ease;
+    }
+    .popup-container h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .popup-container p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .popup-container i {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .popup-container a {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .popup-container a:hover {
+      background: var(--primary-dark);
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:scale(0.9);}
+      to   {opacity:1; transform:scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-container">
+    <i class="fas fa-clock"></i>
+    <h1>On-Chain Payments</h1>
+    <p>The On-Chain Bitcoin payment method will be <strong>live on December&nbsp;1, 2025</strong>.</p>
+    <a href="index.html">Back to Home</a>
+  </div>
+</body>
+</html>

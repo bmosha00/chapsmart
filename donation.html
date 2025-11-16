@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate – ChapSmart</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #f7931a;
+      --primary-dark: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;}
+    body {
+      background: var(--background);
+      display:flex;
+      justify-content:center;
+      padding:40px 20px;
+    }
+    .container {
+      max-width:480px;
+      width:100%;
+      background:var(--card-bg);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:30px 24px;
+    }
+    h1 { text-align:center; color:var(--primary); font-size:28px; margin-bottom:20px; }
+    label { display:block; font-weight:600; margin-bottom:8px; }
+    input {
+      width:100%; padding:12px; border:1px solid #ddd; border-radius:12px;
+      font-size:16px; margin-bottom:20px;
+    }
+    button {
+      width:100%; background:var(--primary); color:#fff; font-weight:600;
+      border:none; padding:14px; border-radius:12px; font-size:16px; cursor:pointer;
+      transition:background 0.3s ease;
+    }
+    button:hover { background:var(--primary-dark); }
+
+    /* ---------- MODALS ---------- */
+    .modal {
+      display:none; position:fixed; z-index:999;
+      left:0; top:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.6);
+      justify-content:center; align-items:center;
+    }
+    .modal-content {
+      background:var(--card-bg);
+      border-radius:20px;
+      padding:30px 24px;
+      max-width:400px;
+      width:90%;
+      text-align:center;
+      position:relative;
+      box-shadow:var(--shadow);
+      animation: fadeIn 0.3s ease;
+    }
+    .close-btn {
+      position:absolute; top:12px; right:16px;
+      font-size:24px; color:#666; cursor:pointer;
+    }
+    .modal-content img {
+      max-width:220px; margin:20px auto;
+      display:block;
+    }
+    .invoice-text {
+      word-wrap:break-word;
+      background:#f7f7f7;
+      padding:12px;
+      border-radius:12px;
+      font-size:14px;
+      margin:10px 0;
+    }
+    .countdown {
+      font-size:16px;
+      font-weight:600;
+      margin-top:10px;
+      color:var(--primary-dark);
+    }
+
+    /* Thank You popup */
+    #thankYouModal .modal-content {
+      padding:40px 28px;
+    }
+    .thank-title {
+      font-size:24px;
+      font-weight:700;
+      color:var(--primary);
+      margin-bottom:12px;
+    }
+    .thank-message {
+      font-size:16px;
+      color:var(--text-secondary);
+      line-height:1.5;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:scale(0.9);}
+      to   {opacity:1; transform:scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Donate with Bitcoin ⚡</h1>
+
+    <label for="amount">Amount (sats)</label>
+    <input type="number" id="amount" placeholder="e.g. 5000" min="1" required>
+
+    <button onclick="createInvoice()">Generate Invoice</button>
+  </div>
+
+  <!-- Invoice Modal -->
+  <div id="invoiceModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle">Pay this Lightning Invoice</h2>
+      <img id="invoiceQR" alt="Invoice QR Code" />
+      <div class="invoice-text" id="invoiceText"></div>
+      <button class="copy-btn" onclick="copyInvoice()" style="
+        background:#000;color:#fff;border:none;padding:10px 16px;
+        border-radius:8px;cursor:pointer;margin-top:10px;">Copy Invoice</button>
+      <div class="countdown" id="countdown"></div>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div id="thankYouModal" class="modal">
+    <div class="modal-content">
+      <h2 class="thank-title">🎉 Thank You!</h2>
+      <p class="thank-message">
+        Your generosity fuels innovation!<br><br>
+        By donating to <strong>ChapSmart</strong>, you help bring
+        fast, borderless Bitcoin payments to communities everywhere.
+        Together we’re building a future of financial freedom. 💛
+      </p>
+    </div>
+  </div>
+
+<script>
+  let countdownInterval, pollInterval, expiresAt, invoiceHash;
+
+  async function createInvoice() {
+    const amount = document.getElementById('amount').value;
+    if (!amount || amount <= 0) {
+      alert('Please enter a valid amount of sats.');
+      return;
+    }
+    try {
+      const res = await fetch('/.netlify/functions/create-invoice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: parseInt(amount) })
+      });
+
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      console.log('Invoice response:', data);
+
+      invoiceHash = data.payment_hash;
+      if (!invoiceHash) {
+        alert("Invoice created but no payment hash returned—cannot check payment.");
+        return;
+      }
+
+      document.getElementById('invoiceModal').style.display = 'flex';
+      document.getElementById('invoiceQR').src =
+        `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${data.payment_request}`;
+      document.getElementById('invoiceText').textContent = data.payment_request;
+
+      expiresAt = Date.now() + 13 * 60 * 1000;
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000);
+      pollInterval = setInterval(checkPayment, 5000);
+    } catch (err) {
+      console.error(err);
+      alert('Error: ' + err.message);
+    }
+  }
+
+  function updateCountdown() {
+    const diff = expiresAt - Date.now();
+    if (diff <= 0) {
+      clearInterval(countdownInterval);
+      document.getElementById('countdown').textContent = "Invoice expired.";
+      clearInterval(pollInterval);
+      return;
+    }
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    document.getElementById('countdown').textContent =
+      `Expires in ${minutes}:${seconds.toString().padStart(2,'0')}`;
+  }
+
+  async function checkPayment() {
+    if (!invoiceHash) return;
+    try {
+      const res = await fetch(`/.netlify/functions/check-invoice?hash=${invoiceHash}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.settled) {
+        clearInterval(pollInterval);
+        clearInterval(countdownInterval);
+        showThankYou();
+      }
+    } catch (err) {
+      console.error('Polling error', err);
+    }
+  }
+
+  function showThankYou() {
+    // Close invoice modal
+    document.getElementById('invoiceModal').style.display = 'none';
+    // Show thank-you modal
+    document.getElementById('thankYouModal').style.display = 'flex';
+    // Reset page after 5 seconds
+    setTimeout(() => {
+      document.getElementById('thankYouModal').style.display = 'none';
+      document.getElementById('amount').value = '';
+      invoiceHash = null;
+    }, 5000);
+  }
+
+  function copyInvoice() {
+    const text = document.getElementById('invoiceText').textContent;
+    navigator.clipboard.writeText(text);
+    alert('Invoice copied to clipboard!');
+  }
+
+  function closeModal() {
+    document.getElementById('invoiceModal').style.display = 'none';
+    clearInterval(countdownInterval);
+    clearInterval(pollInterval);
+  }
+</script>
+</body>
+</html>

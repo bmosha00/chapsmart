@@ -1,0 +1,254 @@
+:root {
+    --background: #fff;
+    --text-color: #333;
+    --card-background: #f9f9f9;
+    --primary: #F7931A;
+    --error-bg: #ffe6e6;
+    --success-bg: #e6ffe6;
+    --valid-color: #28a745;
+}
+
+body {
+    background: var(--background);
+    color: var(--text-color);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+.calculator-card {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.calculator-card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-control.invalid {
+    border-color: red;
+}
+
+.form-control.valid {
+    border-color: var(--valid-color);
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2328a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat right 10px center;
+}
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #e68215;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.result-box {
+    background: #fff8e1;
+    border: 1px solid #ffecb3;
+    padding: 1.2rem;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.result-item span:first-child {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.result-item span:last-child {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#formMessages {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+#formMessages.error {
+    background: var(--error-bg);
+    border: 1px solid #ff9999;
+    color: red;
+}
+
+#formMessages.success {
+    background: var(--success-bg);
+    border: 1px solid #99ff99;
+    color: green;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    background: var(--card-background);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.popup.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.popup-close:hover {
+    color: var(--primary);
+}
+
+.popup-title {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.popup-amount {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.popup-amount span {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.popup-qrcode img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.popup-invoice {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.popup-invoice textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    resize: none;
+    background: #fff;
+    color: var(--text-color);
+}
+
+.popup-invoice .btn-primary {
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.popup-status {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.popup-timer {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.popup-timer span {
+    color: var(--primary);
+    font-weight: 700;
+}

@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChapSmart – Support</title>
+  <link rel="icon" type="image/png" href="img/logo1.png">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #f7931a;
+      --primary-dark: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .app-container {
+      max-width: 500px;
+      width: 100%;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 28px 24px 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      background: var(--card-bg);
+    }
+
+    .faq-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-top: 20px;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .faq-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .faq-content {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .whatsapp-btn:hover { background: var(--primary-dark); }
+    .whatsapp-btn i { font-size: 18px; }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(10px);}
+      to   {opacity:1; transform:translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <h1>How Can We Help You?</h1>
+
+    <select id="faqSelect">
+      <option value="">-- Select a problem --</option>
+    </select>
+
+    <div id="faqCard" class="faq-card" style="display:none;">
+      <div class="faq-title" id="faqTitle"></div>
+      <div class="faq-content" id="faqContent"></div>
+      <button class="whatsapp-btn" onclick="openWhatsApp()">
+        <i class="fab fa-whatsapp"></i> Contact Support
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const faqs = [
+      {title:'transaction-failed',content:'We apologize for the inconvenience caused by your transaction failure. Please verify your Satoshis balance, ensure you are using a Lightning Network-compatible wallet, and confirm the recipient’s M-Pesa details are accurate. If the issue persists, our support team is available to assist you.'},
+      {title:'payment-confirmation',content:'Payment confirmations may take a few minutes to process on the Lightning Network. Please ensure the correct amount was sent to the provided Lightning Address. If confirmation is delayed beyond 15 minutes, kindly contact our support team for assistance.'},
+      {title:'account-access',content:'ChapSmart does not require an account for transactions. Simply complete the transaction form and send your Satoshis. If you encounter any difficulties, our support team is ready to assist you.'},
+      {title:'recipient-not-received',content:'Please confirm that the M-Pesa number and name provided are correct. Funds are typically delivered within minutes. If the recipient has not received the funds, contact our support team with your transaction details for further assistance.'},
+      {title:'lightning-payment',content:'Issues with Lightning payments may arise due to network congestion or an incompatible wallet. We recommend using a Lightning-compatible wallet, such as Wallet of Satoshi, and verifying the Lightning Address. Please contact support if the issue continues.'},
+      {title:'invalid-mpesa',content:'An invalid M-Pesa number may prevent successful transactions. Ensure the number follows the format 07XXXXXXXX (10 digits starting with 07). Verify the number and try again. For further assistance, please contact our support team.'},
+      {title:'currency-conversion',content:'Our calculator converts USD to Satoshis (SATS) and Tanzanian Shillings (TZS) based on current rates. If you have questions about the conversion or notice discrepancies, please contact our support team for clarification.'},
+      {title:'wallet-compatibility',content:'ChapSmart requires a Lightning Network-compatible wallet (e.g., Wallet of Satoshi, BlueWallet). If your wallet does not support Lightning payments, please switch to a compatible wallet and try again. Contact support for guidance.'},
+      {title:'transaction-limits',content:'Transactions are limited to 2–300 USD to ensure compliance and security. If you need to send a different amount, please contact our support team to discuss available options.'},
+      {title:'invoice-expiry',content:'Lightning invoices expire after 15 minutes. If your invoice has expired, please submit a new transaction to generate a fresh invoice. For assistance, our support team is available to help.'},
+      {title:'how-chapsmart-sends',content:'ChapSmart utilizes Bitcoin and the Lightning Network to facilitate instant money transfers to Tanzania. You pay in Bitcoin (SATS), and the recipient receives the equivalent amount in Tanzanian Shillings (TZS) via M-Pesa.'},
+      {title:'fees',content:'ChapSmart offers zero-fee transactions, ensuring cost-effective remittances to Tanzania.'},
+      {title:'safety-bitcoin',content:'ChapSmart employs the robust security of Bitcoin and the Lightning Network to safeguard your transactions. Additional measures, such as rate limiting, are in place to protect your data. Your transactions are secure with us.'},
+      {title:'transfer-time',content:'Transactions with ChapSmart are processed swiftly. Once your payment is confirmed on the Lightning Network, the recipient typically receives funds in their M-Pesa account within minutes.'},
+      {title:'other',content:'For any other inquiries or issues not listed, please contact our support team with detailed information, and we will provide personalized assistance promptly.'}
+    ];
+
+    const selectEl = document.getElementById('faqSelect');
+    faqs.forEach(faq => {
+      const opt = document.createElement('option');
+      opt.value = faq.title;
+      opt.textContent = faq.title.replace(/-/g,' ').toUpperCase();
+      selectEl.appendChild(opt);
+    });
+
+    selectEl.addEventListener('change', () => {
+      const value = selectEl.value;
+      const card = document.getElementById('faqCard');
+      if (!value) {
+        card.style.display = 'none';
+        return;
+      }
+      const chosen = faqs.find(f => f.title === value);
+      document.getElementById('faqTitle').textContent = chosen.title.replace(/-/g,' ').toUpperCase();
+      document.getElementById('faqContent').textContent = chosen.content;
+      card.style.display = 'block';
+    });
+
+    function openWhatsApp() {
+      window.open('https://wa.me/+255763052308?text=I%20need%20support%20with%20ChapSmart','_blank');
+    }
+  </script>
+</body>
+</html>

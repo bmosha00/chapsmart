@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapsmart – Send Money</title>
+  <link rel="icon" type="image/png" href="img/logo1.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .footer-social {
+    background:#000;
+    color:#fff;
+    padding:12px 0;              /* smaller vertical padding */
+    text-align:center;
+  }
+  .social-icons {
+    display:flex;
+    justify-content:center;
+    gap:20px;                    /* tighter gap */
+    margin-bottom:6px;
+  }
+  .social-icons a {
+    color:#fff;
+    font-size:1.2rem;            /* smaller icon size */
+    transition:transform 0.2s, color 0.2s;
+  }
+  .social-icons a:hover {
+    transform:scale(1.1);
+    color:#f7931a;
+  }
+  .copy-note {
+    font-size:0.8rem;            /* smaller text */
+    opacity:0.7;
+    margin:0;
+  }
+    :root {
+      --primary: #f7931a;
+      --primary-dark: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .app-container {
+      max-width: 500px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--background);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* App Bar – black */
+    .app-bar {
+      background: #000;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      height: 36px;
+      border-radius: 8px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    .actions i {
+      font-size: 26px;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .actions i:hover { transform: scale(1.15); }
+
+    /* Page Content */
+    .page-content {
+      flex: 1;
+      padding: 28px 24px 40px;
+    }
+
+    /* Hero */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 36px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    .hero-title {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 28px 0 12px;
+      position: relative;
+      padding-left: 14px;
+      color: var(--text);
+    }
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    /* Service Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .icon-container {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      background-color: rgba(247, 147, 26, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .service-card:hover .icon-container { transform: scale(1.1); }
+
+    .service-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      flex-shrink: 0;
+    }
+    .feature-icon i { color: #fff; font-size: 22px; }
+
+    .feature-title { font-weight: 600; margin-bottom: 6px; font-size: 16px; }
+    .feature-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Guide Card */
+    .guide-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .guide-card:hover { transform: translateY(-4px); }
+
+    .guide-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      flex-shrink: 0;
+    }
+    .guide-icon i { color: #fff; font-size: 22px; }
+
+    /* Partners Section */
+    .partners-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .partners-section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .partners-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .partners-logos img {
+      max-height: 50px;
+      width: auto;
+      filter: grayscale(0);
+      transition: transform 0.3s ease;
+    }
+    .partners-logos img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Snackbar */
+    .snackbar {
+      visibility: hidden;
+      min-width: 280px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 12px;
+      padding: 16px 20px;
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      box-shadow: var(--shadow);
+      font-weight: 500;
+    }
+    .snackbar.show {
+      visibility: visible;
+      animation: fadeInUp 0.5s, fadeOutDown 0.5s 2.5s;
+    }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    @keyframes fadeOutDown { from { opacity: 1; transform: translate(-50%, 0); } to { opacity: 0; transform: translate(-50%, 20px); } }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <div id="homePage" class="page">
+      <div class="app-bar">
+        <div class="logo-container">
+          <img src="img/logo1.png" class="logo-img" alt="Chapsmart Logo">
+          <div class="logo-text">CHAPSMART</div>
+        </div>
+        <div class="actions">
+          <a href="support.html" style="color: inherit; text-decoration: none;">
+            <i class="fas fa-headset"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="hero-section">
+          <h1 class="hero-title">Financial Freedom</h1>
+          <p class="hero-subtitle">Fast, secure, and Bitcoin-powered financial solutions</p>
+        </div>
+
+        <div class="section-title">Our Services</div>
+        <div class="section-subtitle">Choose a service to begin</div>
+
+        <div class="grid-container">
+          <div class="service-card" onclick="window.location.href='Bitremit.html'">
+            <div class="icon-container">
+              <i class="fab fa-bitcoin" style="color: var(--primary);"></i>
+            </div>
+            <div class="service-title">Bitremit ₿</div>
+            <div class="service-desc">Send money to East Africa instantly with Bitcoin</div>
+          </div>
+
+          <div class="service-card" onclick="showSnackbar('Bill Payment Coming Soon!')">
+            <div class="icon-container">
+              <i class="fas fa-receipt" style="color: var(--primary-dark);"></i>
+            </div>
+            <div class="service-title">Bill Payment</div>
+            <div class="service-desc">Pay your bills securely</div>
+          </div>
+
+          <div class="service-card" onclick="window.location.href='airtime-tz.html'">
+            <div class="icon-container">
+              <i class="fas fa-mobile-alt" style="color: var(--primary-dark);"></i>
+            </div>
+            <div class="service-title">Airtime</div>
+            <div class="service-desc">Buy mobile airtime instantly</div>
+          </div>
+
+          <div class="service-card" onclick="showSnackbar('Events & Tickets Coming Soon!')">
+            <div class="icon-container">
+              <i class="fas fa-ticket-alt" style="color: var(--primary-dark);"></i>
+            </div>
+            <div class="service-title">Events & Tickets</div>
+            <div class="service-desc">Pay for events, bus, cinema</div>
+          </div>
+        </div>
+
+        <!-- Join Section -->
+        <div class="section-title">Join the ChapSmart Revolution</div>
+
+        <div class="feature-card" onclick="window.location.href='donation.html'" style="cursor:pointer;">
+          <div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+          <div>
+            <div class="feature-title">Donate and Help Build ChapSmart</div>
+            <div class="feature-desc">Support our mission to grow a Bitcoin-powered financial ecosystem for everyone.</div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="window.location.href='liqudity-pool.html'" style="cursor:pointer;">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <div>
+            <div class="feature-title">Liquidity Pools</div>
+            <div class="feature-desc">Provide liquidity to ChapSmart and earn competitive APYs with our 6-month Tether (USDT) on the Bitcoin Lightning Network.</div>
+          </div>
+        </div>
+
+        <!-- ChapSmart Guide -->
+        <div class="section-title">ChapSmart Guide</div>
+        <div class="guide-card" onclick="window.location.href='guide.html'">
+          <div class="guide-icon"><i class="fas fa-book-open"></i></div>
+          <div>
+            <div class="feature-title">Open Guide</div>
+            <div class="feature-desc">
+              Learn how to use ChapSmart with our step-by-step guide and tips for Bitcoin-powered remittances.
+            </div>
+          </div>
+        </div>
+
+        <!-- Partners & Supporters -->
+        <div class="partners-section">
+             <h3>Trusted by </h3>
+          <div class="partners-logos">
+            <a href="https://blog.getalby.com/an-african-remittance-service-powered-by-alby-hub/" target="_blank" rel="noopener">
+              <img src="img/alby-logo.png" alt="Alby Logo">
+            </a>
+            <a href="https://hrf.org/latest/hrfs-weekly-financial-freedom-report-75/" target="_blank" rel="noopener">
+              <img src="img/hrf-logo.png" alt="Human Rights Foundation Logo">
+            </a>
+            <a href="https://bitcoiners.africa/" target="_blank" rel="noopener">
+              <img src="img/african-bitcoiners-logo.png" alt="African Bitcoiners Logo">
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="snackbar" class="snackbar">Coming Soon!</div>
+    <footer class="footer-social">
+  <div class="footer-container">
+    <div class="social-icons">
+      <a href="https://x.com/chapsmart_tz?s=21" target="_blank" aria-label="Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/chapsmart_tz?igsh=MWpqamZkZ2ZieG9laA%3D%3D&utm_source=qr" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="javascript:void(0);" onclick="copyNostr()" aria-label="Nostr Public Key">
+        <i class="fas fa-bolt"></i>
+      </a>
+    </div>
+    <p class="copy-note">© 2025 ChapSmart</p>
+  </div>
+</footer>
+  </div>
+
+  <script>
+    function showSnackbar(message) {
+      const snackbar = document.getElementById('snackbar');
+      snackbar.textContent = message;
+      snackbar.classList.add('show');
+      setTimeout(() => snackbar.classList.remove('show'), 3000);
+    }
+     function copyNostr() {
+    const nostrKey = "npub1z75k4fqjmyvfcv5e57tampeqatnfsrt6mt78dmz4ps9nezskjncqqtvwsz";
+    navigator.clipboard.writeText(nostrKey)
+      .then(() => alert("Nostr public key copied!"))
+      .catch(() => alert("Copy failed, please copy manually."));
+  }
+  </script>
+</body>
+</html>

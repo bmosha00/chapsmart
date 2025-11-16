@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Airtime</title>
+  <link rel="icon" type="image/png" href="img/logo1.png">
+  <style>
+    :root {
+      --primary: #f7931a;
+      --primary-hover: #d67a0f;
+      --background: #fffaf5;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --text: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    h1 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+    select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      background: #fff;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: none;
+      font-weight: 600;
+    }
+    button:hover {
+      background: var(--primary-hover);
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .fade-in {
+      animation: fade 0.4s ease-in;
+    }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Airtime</h1>
+
+    <!-- Country -->
+    <label for="country">Country</label>
+    <select id="country">
+      <option value="">-- Choose Country --</option>
+      <option value="tanzania">Tanzania</option>
+      <option value="kenya">Kenya</option>
+      <option value="uganda">Uganda</option>
+    </select>
+
+    <!-- Payment Method (Tanzania only) -->
+    <div id="paymentDiv" class="hidden fade-in">
+      <label for="method">Payment Method</label>
+      <select id="method">
+        <option value="">-- Choose Method --</option>
+        <option value="lightning">Lightning (Satoshi)</option>
+      </select>
+    </div>
+
+    <button id="continueBtn" class="hidden">Continue</button>
+
+    <!-- Message for Kenya/Uganda -->
+    <div id="message" class="message hidden fade-in"></div>
+  </div>
+
+  <script>
+    const countrySelect = document.getElementById('country');
+    const methodSelect  = document.getElementById('method');
+    const paymentDiv    = document.getElementById('paymentDiv');
+    const continueBtn   = document.getElementById('continueBtn');
+    const messageDiv    = document.getElementById('message');
+
+    countrySelect.addEventListener('change', () => {
+      const country = countrySelect.value;
+      resetViews();
+
+      if (country === 'tanzania') {
+        paymentDiv.classList.remove('hidden');
+      } else if (country === 'kenya' || country === 'uganda') {
+        messageDiv.textContent = "Coming soon 😊";
+        messageDiv.classList.remove('hidden');
+      }
+    });
+
+    methodSelect.addEventListener('change', () => {
+      if (methodSelect.value === 'lightning') {
+        continueBtn.classList.remove('hidden');
+      } else {
+        continueBtn.classList.add('hidden');
+      }
+    });
+
+    continueBtn.addEventListener('click', () => {
+      const country = countrySelect.value;
+      if (country === 'tanzania' && methodSelect.value === 'lightning') {
+        window.location.href = 'airtime-tz.html';
+      }
+    });
+
+    function resetViews() {
+      paymentDiv.classList.add('hidden');
+      continueBtn.classList.add('hidden');
+      messageDiv.classList.add('hidden');
+      methodSelect.value = '';
+    }
+  </script>
+</body>
+</html>
